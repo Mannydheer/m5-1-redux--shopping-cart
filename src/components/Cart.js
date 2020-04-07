@@ -10,6 +10,7 @@ import { trashO } from 'react-icons-kit/fa/trashO'
 import Button from './Button';
 
 const Taxes = {
+    'Select A Province': null,
     'Alberta': '5',
     'British Columbia': '12',
     'Manitoba': '12',
@@ -31,10 +32,8 @@ const Taxes = {
 const Cart = () => {
 
     const storeItems = useSelector(getStoreItemArray);
+    const [province, setProvince] = useState(null);
     let [total, setTotal] = useState(0);
-
-    console.log(storeItems)
-
 
     const dispatch = useDispatch();
     //as storeItems changes, the total get recounted and updated in state. 
@@ -59,6 +58,16 @@ const Cart = () => {
             <EmptyButton onClick={() => dispatch(clearCart())}>
                 Empty Cart
             </EmptyButton>
+            <select onChange={(e) => setProvince(e.target.value)}>
+                {Object.keys(Taxes).map(province => {
+                    return (
+                        <option>
+                            {province}
+                        </option>
+
+                    )
+                })}
+            </select>
         </HeaderWrapper>
         <AllItemWrap>
             {/* For each item... */}
@@ -82,14 +91,19 @@ const Cart = () => {
             }
             )}
         </AllItemWrap>
+
+
         <PurchaseWrapper>
             <Total>
-                Total: {total}
+                SubTotal: {total}
             </Total>
             <PurchaseButton>
                 Purchase
                 </PurchaseButton>
         </PurchaseWrapper>
+        {province !== null && total !== 0 && <Total>
+            Sales Tax:  {`${Taxes[province]}%`}: <div>Total: {Math.floor((total * (Taxes[province] / 100) + total) * 100) / 100}</div>
+        </Total>}
 
     </Wrapper>
     )
