@@ -34,7 +34,6 @@ export default function cartReducer(state = initialState, action) {
         case 'CLEAR_CART': {
             //return an empty object, the initialState. 
             return {
-
             }
         }
         default:

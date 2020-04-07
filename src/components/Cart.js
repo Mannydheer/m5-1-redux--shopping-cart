@@ -148,6 +148,7 @@ display: flex;
 margin-top: 40px;
 font-size: 30px;
 justify-content: space-between;
+border-top: dashed black 1px;
 
 
 
